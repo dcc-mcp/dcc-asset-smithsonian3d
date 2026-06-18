@@ -1,0 +1,18 @@
+{
+  "version": "1",
+  "entries": [
+    {
+      "name": "dcc-asset-smithsonian3d",
+      "description": "Search and download Smithsonian Open Access CC0 3D files",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "smithsonian", "cc0", "download", "3d"],
+      "version": "0.1.0",
+      "install": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d",
+        "ref": "main"
+      }
+    }
+  ]
+}
+

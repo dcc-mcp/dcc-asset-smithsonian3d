@@ -1,0 +1,77 @@
+tools:
+  - name: search_smithsonian3d_files
+    description: Search Smithsonian Open Access 3D S3 keys by substring.
+    source_file: scripts/search_smithsonian3d_files.py
+    execution: sync
+    affinity: any
+    timeout_hint_secs: 30
+    enforce_thread_affinity: true
+    annotations:
+      read_only_hint: true
+      idempotent_hint: true
+      open_world_hint: true
+    group: smithsonian3d
+    input_schema:
+      type: object
+      properties:
+        query:
+          type: string
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 10
+        extensions:
+          type: array
+          items:
+            type: string
+          default: ["glb", "gltf", "obj", "usdz"]
+    output_schema:
+      type: object
+
+  - name: list_smithsonian3d_document
+    description: List downloadable model derivatives for a Smithsonian 3D document ID.
+    source_file: scripts/list_smithsonian3d_document.py
+    execution: sync
+    affinity: any
+    timeout_hint_secs: 20
+    enforce_thread_affinity: true
+    annotations:
+      read_only_hint: true
+      idempotent_hint: true
+      open_world_hint: true
+    group: smithsonian3d
+    input_schema:
+      type: object
+      required: ["document_id"]
+      properties:
+        document_id:
+          type: string
+    output_schema:
+      type: object
+
+  - name: download_smithsonian3d_file
+    description: Download one Smithsonian Open Access 3D file by URL or S3 key.
+    source_file: scripts/download_smithsonian3d_file.py
+    execution: sync
+    affinity: any
+    timeout_hint_secs: 180
+    enforce_thread_affinity: true
+    annotations:
+      read_only_hint: false
+      destructive_hint: false
+      idempotent_hint: false
+      open_world_hint: true
+    group: smithsonian3d
+    input_schema:
+      type: object
+      required: ["source", "output_dir"]
+      properties:
+        source:
+          type: string
+          description: Full URL or S3 key such as 3d/<id>/<file>.
+        output_dir:
+          type: string
+    output_schema:
+      type: object
+
