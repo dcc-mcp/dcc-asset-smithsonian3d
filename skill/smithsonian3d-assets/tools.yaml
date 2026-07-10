@@ -51,7 +51,7 @@ tools:
       type: object
 
   - name: download_smithsonian3d_file
-    description: Download one Smithsonian Open Access 3D file by URL or S3 key.
+    description: Download one Smithsonian file and return a validated AssetDescriptor with CC0 attribution.
     source_file: scripts/download_smithsonian3d_file.py
     execution: sync
     affinity: any
@@ -74,4 +74,20 @@ tools:
           type: string
     output_schema:
       type: object
-
+      required: [asset_descriptor]
+      properties:
+        asset_descriptor:
+          type: object
+          required: [asset_id, variants, attribution]
+          properties:
+            asset_id:
+              type: string
+            variants:
+              type: array
+              minItems: 1
+              items:
+                type: object
+                required: [local_path, format]
+            attribution:
+              type: object
+              required: [source_url, license_text]
