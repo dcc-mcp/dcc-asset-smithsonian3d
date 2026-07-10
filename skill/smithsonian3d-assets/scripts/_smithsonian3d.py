@@ -7,6 +7,8 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
 
+from dcc_mcp_core.asset_import import AssetAttribution, AssetDescriptor, AssetFileVariant
+
 
 S3_BASE = "https://smithsonian-open-access.s3.us-west-2.amazonaws.com"
 API_BASE = "https://3d-api.si.edu/content/document"
@@ -51,3 +53,22 @@ def download(source: str, output_dir: str) -> str:
         target.write_bytes(resp.read())
     return str(target)
 
+
+def asset_descriptor(source: str, local_path: str) -> dict[str, Any]:
+    descriptor = AssetDescriptor(
+        asset_id=f"smithsonian3d:{source}",
+        variants=[
+            AssetFileVariant(
+                local_path=local_path,
+                format=Path(local_path).suffix.lstrip(".").lower() or "unknown",
+                preferred=True,
+            )
+        ],
+        attribution=AssetAttribution(
+            source_url=_url(source),
+            license_text=LICENSE["usage_notice"],
+            attribution_text="Smithsonian Open Access 3D — CC0/public domain dedication.",
+        ),
+    )
+    descriptor.validate()
+    return descriptor.to_dict()
