@@ -1,6 +1,6 @@
 # DCC-MCP Smithsonian 3D Assets
 
-![Workflow showcase](docs/workflow-showcase.png)
+![Workflow showcase](docs/images/dcc-asset-smithsonian3d-showcase.webp)
 
 Search and download Smithsonian Open Access 3D files from the public S3 mirror
 and Smithsonian 3D API document endpoint.
